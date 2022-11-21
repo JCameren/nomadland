@@ -1,11 +1,15 @@
+import os
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+
 
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
 
+#def some_function(request):
+  #secret_key = os.environ['SECRET_KEY']
 
 def signup(request):
   error_message = ''
