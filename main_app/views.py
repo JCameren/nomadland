@@ -10,7 +10,8 @@ from .models import Destination
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    destinations = Destination.objects.all().order_by('-id')
+    return render(request, 'home.html', { 'destinations': destinations })
 
 def destination_details(request, destination_id):
   destination = Destination.objects.get(id=destination_id)
