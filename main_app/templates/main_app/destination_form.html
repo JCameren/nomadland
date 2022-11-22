@@ -2,6 +2,12 @@
 
 {% block content %}
 
+{% if object %}
+  <h1>Edit {{ object.place }}</h1>
+{% else %}
+  <h1>Add Destination</h1>
+{% endif %}
+
 <form action="" method="POST">
 
   {% csrf_token %}

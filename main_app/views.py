@@ -2,7 +2,7 @@ import os
 import uuid
 import boto3
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .models import Destination
@@ -16,8 +16,14 @@ def home(request):
 def destination_details(request, destination_id):
   destination = Destination.objects.get(id=destination_id)
   return render(request, 'destinations/detail.html', {'destination': destination})
-#def some_function(request):
-  #secret_key = os.environ['SECRET_KEY']
+
+class DestinationUpdate(UpdateView):
+  model = Destination
+  fields = ['description']
+
+class DestinationDelete(DeleteView):
+  model = Destination
+  success_url = '/'
 
 def signup(request):
   error_message = ''

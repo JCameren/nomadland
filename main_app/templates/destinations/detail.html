@@ -4,5 +4,8 @@
 <div>
   <h1>{{ destination.place }}</h1>
   <p>{{ destination.description }}</p>
+  <a href="{% url 'destinations_update' destination.id %}">Edit</a>
+  <a href="{% url 'destinations_delete' destination.id %}">Delete</a>
+ 
 </div>
 {% endblock %}
