@@ -5,7 +5,18 @@
   <h1>{{ destination.place }}</h1>
   <p>{{ destination.description }}</p>
   <a href="{% url 'destinations_update' destination.id %}">Edit</a>
-  <a href="{% url 'destinations_delete' destination.id %}">Delete</a>
- 
+  <a href="{% url 'destinations_delete' destination.id %}">Delete</a> 
 </div>
+<form action="{% url 'add_comment' destination.id %}" method="POST">
+  {% csrf_token %}
+  {{ comment_form.as_p }}
+  <button type="submit">Add comment</button>
+</form>
+{% for comment in comments %}
+  <div style="border: 1px solid black;">
+    {{ comment.text }}
+    {{ comment.user.username }}
+  </div>
+
+{% endfor %}
 {% endblock %}

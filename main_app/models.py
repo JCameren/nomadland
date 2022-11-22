@@ -20,3 +20,8 @@ class Photo(models.Model):
 
   def __str__(self):
     return f"Photo for destination_id: {self.destination_id} @ {self.url}"
+
+class Comment(models.Model):
+  text = models.TextField(max_length=250)
+  destination = models.ForeignKey(Destination, on_delete=models.CASCADE)
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
