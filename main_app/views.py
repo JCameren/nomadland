@@ -1,13 +1,20 @@
 import os
+import uuid
+import boto3
 from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from .models import Destination
 
 
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
 
+def destination_details(request, destination_id):
+  destination = Destination.objects.get(id=destination_id)
+  return render(request, 'destinations/detail.html', {'destination': destination})
 #def some_function(request):
   #secret_key = os.environ['SECRET_KEY']
 
@@ -27,3 +34,11 @@ def signup(request):
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
+
+class DestinationCreate(CreateView):
+  model = Destination
+  fields = ['place', 'description']
+
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
