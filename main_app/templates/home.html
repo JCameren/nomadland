@@ -6,4 +6,7 @@
    sed do eiusmod tempor incididunt
     ut labore et dolore magna aliqua.
 </p>
+{% for destination in destinations %}
+  <a href="{% url 'detail' destination.id %}"><div>{{ destination.place }}</div></a>
+{% endfor %}
 {% endblock %}
