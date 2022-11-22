@@ -5,7 +5,8 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from .models import Destination
+from .models import Destination, Comment
+from .forms import CommentForm
 
 
 # Create your views here.
@@ -15,7 +16,13 @@ def home(request):
 
 def destination_details(request, destination_id):
   destination = Destination.objects.get(id=destination_id)
-  return render(request, 'destinations/detail.html', {'destination': destination})
+  comment_form = CommentForm()
+  comments = Comment.objects.all()
+  return render(request, 'destinations/detail.html', {
+    'destination': destination, 
+    'comment_form': comment_form,
+    'comments': comments,
+    })
 
 class DestinationUpdate(UpdateView):
   model = Destination
@@ -49,3 +56,22 @@ class DestinationCreate(CreateView):
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
+
+
+# class CommentCreate(CreateView):
+#   model = Comment
+#   fields = ['text']
+  
+#   def form_valid(self, form, destination_id):
+#     form.instance.user = self.request.user
+#     form.instance.destination = destination_id
+#     return super().form_valid(form)
+
+def add_comment(request, destination_id):
+  form = CommentForm(request.POST)
+  if form.is_valid():
+    new_comment = form.save(commit=False)
+    new_comment.destination_id = destination_id
+    new_comment.user_id = request.user.id
+    new_comment.save()
+  return redirect('detail', destination_id=destination_id)
