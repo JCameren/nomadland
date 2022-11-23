@@ -25,3 +25,6 @@ class Comment(models.Model):
   text = models.TextField(max_length=250)
   destination = models.ForeignKey(Destination, on_delete=models.CASCADE)
   user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+  def get_absolute_url(self):
+    return reverse('detail', kwargs={'destination_id': self.destination.id})

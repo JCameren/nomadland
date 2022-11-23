@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.urls import reverse,reverse_lazy
 from .models import Destination, Comment
 from .forms import CommentForm
 
@@ -17,7 +18,7 @@ def home(request):
 def destination_details(request, destination_id):
   destination = Destination.objects.get(id=destination_id)
   comment_form = CommentForm()
-  comments = Comment.objects.all()
+  comments = Comment.objects.filter(destination=destination_id)
   return render(request, 'destinations/detail.html', {
     'destination': destination, 
     'comment_form': comment_form,
@@ -75,3 +76,15 @@ def add_comment(request, destination_id):
     new_comment.user_id = request.user.id
     new_comment.save()
   return redirect('detail', destination_id=destination_id)
+
+class CommentUpdate(UpdateView):
+  model = Comment
+  fields = ['text']
+
+class CommentDelete(DeleteView):
+  model = Comment
+  #success_url = 'destination/<int:destination_id>'
+  def get_success_url(self):
+    #destination_id = self.destination.id
+    return f"/destinations/{self.object.destination.id}"
+
