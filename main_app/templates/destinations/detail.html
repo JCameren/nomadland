@@ -16,6 +16,8 @@
   <div style="border: 1px solid black;">
     {{ comment.text }}
     {{ comment.user.username }}
+    <a href="{% url 'comments_update' comment.id %}">Edit</a>
+    <a href="{% url 'comments_delete' comment.id %}">Delete</a>
   </div>
 
 {% endfor %}
