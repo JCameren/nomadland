@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.destination_set.count %}
+  {% for destination in user.destination_set.all %}
+    <h1>{{ destination.place }}</h1>
+  {% endfor %}
+{% else %}
+  <h1>No post</h1>
+{% endif %}
+
+
+
+{% endblock %}

@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.urls import reverse,reverse_lazy
-from .models import Destination, Comment
+from .models import Destination, Comment, User
 from .forms import CommentForm
 
 
@@ -87,4 +87,9 @@ class CommentDelete(DeleteView):
   def get_success_url(self):
     #destination_id = self.destination.id
     return f"/destinations/{self.object.destination.id}"
+
+def user_index(request, user_id):
+  user_id = request.user.id
+  user = User.objects.get(id=user_id)
+  return render(request, 'user.html', {'user': user})
 
