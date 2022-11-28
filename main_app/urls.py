@@ -12,5 +12,6 @@ urlpatterns = [
     path('destinations/<int:destination_id>/add_comment/', views.add_comment, name='add_comment'),
     path('comments/<int:pk>/update', views.CommentUpdate.as_view(), name='comments_update'),
     path('destinations/<int:pk>/comment_delete', views.CommentDelete.as_view(), name='comments_delete'),
+    path('user/<int:user_id>', views.user_index, name='user_index'),
     
 ]
