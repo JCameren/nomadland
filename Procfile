@@ -1,1 +1,1 @@
-web: gunicorn nomadland-ga.wsgi
+web: gunicorn nomadland.wsgi

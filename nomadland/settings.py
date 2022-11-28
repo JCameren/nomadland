@@ -72,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'nomadland-ga.wsgi.application'
+WSGI_APPLICATION = 'nomadland.wsgi.application'
 
 
 # Database
