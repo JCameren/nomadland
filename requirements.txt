@@ -59,7 +59,6 @@ s3transfer==0.6.0
 SecretStorage==3.3.1
 service-identity==18.1.0
 six==1.16.0
-sos==4.3
 sqlparse==0.4.2
 ssh-import-id==5.11
 systemd-python==234
