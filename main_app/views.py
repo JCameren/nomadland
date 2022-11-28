@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.urls import reverse,reverse_lazy
-from .models import Destination, Comment, User
+from .models import Destination, Comment, User, Photo
 from .forms import CommentForm
 
 
@@ -19,10 +19,15 @@ def destination_details(request, destination_id):
   destination = Destination.objects.get(id=destination_id)
   comment_form = CommentForm()
   comments = Comment.objects.filter(destination=destination_id)
+  if Photo.objects.filter(destination=destination_id).exists():
+    photo = Photo.objects.get(destination=destination_id)
+  else:
+    photo = None
   return render(request, 'destinations/detail.html', {
     'destination': destination, 
     'comment_form': comment_form,
     'comments': comments,
+    'photo': photo
     })
 
 class DestinationUpdate(UpdateView):
@@ -93,3 +98,17 @@ def user_index(request, user_id):
   user = User.objects.get(id=user_id)
   return render(request, 'user.html', {'user': user})
 
+def add_photo(request, destination_id):
+  photo_file = request.FILES.get('photo-file', None)
+  if photo_file:
+    s3 = boto3.client('s3')
+    key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+    try:
+      bucket = os.environ['S3_BUCKET']
+      s3.upload_fileobj(photo_file, bucket, key)
+      url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+      Photo.objects.create(url=url, destination_id=destination_id)
+    except Exception as e:
+      print('An error occrued uploading file to S3')
+      print(e)
+  return redirect('detail', destination_id=destination_id)

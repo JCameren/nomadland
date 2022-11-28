@@ -2,6 +2,15 @@
 
 {% block content %}
 <div>
+  {% if photo %}
+    <img src="{{ photo.url }}" alt="Destination Photo">
+  {% elif destination.user.id == request.user.id %}
+    <form action="{% url 'add_photo' destination.id %}" enctype="multipart/form-data" method="POST">
+      {% csrf_token %}
+      <input type="file" name="photo-file">
+      <button type="submit">Submit</button>
+    </form>
+  {% endif %}
   <h1>{{ destination.place }}</h1>
   <p>{{ destination.description }}</p>
   <a href="{% url 'destinations_update' destination.id %}">Edit</a>

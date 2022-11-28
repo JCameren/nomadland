@@ -13,5 +13,5 @@ urlpatterns = [
     path('comments/<int:pk>/update', views.CommentUpdate.as_view(), name='comments_update'),
     path('destinations/<int:pk>/comment_delete', views.CommentDelete.as_view(), name='comments_delete'),
     path('user/<int:user_id>', views.user_index, name='user_index'),
-    
+    path('destinations/<int:destination_id>/add_photo', views.add_photo, name='add_photo'),
 ]
