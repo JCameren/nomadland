@@ -1,14 +1,41 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Sign Up</h1>
-<p class="red-text">{{ error_message }}</p>
+
+<p class="red-text">{{ error_message }}</p> 
 
 
-<form method="POST" action="{% url 'signup' %}">
+<!-- <form method="POST" action="{% url 'signup' %}">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="hidden" name="next" value="{{ next }}">
     <button type="submit" class="btn">Sign Up</button>
-  </form>
+  </form> -->
+<form action="{% url 'signup' %}" class="card form sm-container flex-col" method="POST">
+  {% csrf_token %}
+  <h2 class="md-txt txt-focus">Create an Account</h2>
+  <div class="md-spacer"></div>
+  <section class="fields-container txt-subtle flex-col">
+    <label for="">Enter a Username</label>
+    <div class="xs-spacer"></div>
+    <input type="text" name="username" class="card xs-spacer" required>
+  </section>
+  <div class="sm-spacer"></div>
+  <section class="fields-container txt-subtle flex-col">
+    <label for="">Enter a Password</label>
+    <div class="xs-spacer"></div>
+    <input type="text" name="password1" class="card xs-spacer" required>
+  </section>
+  <div class="sm-spacer"></div>
+  <section class="fields-container txt-subtle flex-col">
+    <label for="">Re-enter Password</label>
+    <div class="xs-spacer"></div>
+    <input type="text" name="password2" class="card xs-spacer" required>
+  </section>
+  <div class="xs-spacer"></div>
+  <section class="fields-container txt-subtle flex-col">
+    <button class="btn" type="submit">Register</button>
+  </section>
+  <input type="hidden" name="next" value="{{ next }}">
+</form>
 {% endblock %}

@@ -9,30 +9,31 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <title>NomandLand</title>
 </head>
-<body>
-    <!-- navbar here -->
-    <header>
-        <nav>
+<body class="dark-mode">
+    <header class="app-header flex-al-c">
+        <nav class="container flex-jc-sb">
             <ul>
                 <li><a href="{% url 'home' %}">Logo</a></li>
             </ul>
-            <ul>
+            <ul class="nav-links">
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'logout' %}">Logout</a></li>
-                    <li><a href="{% url 'destinations_create' %}">Add Destination</a></li>
-                    <li><a href="{% url 'user_index' user.id %}">User</a></li>
+                    <li class="nav-link"><a href="{% url 'destinations_create' %}">Add Destination</a></li>
+                    <li class="nav-link active-tab"><a href="{% url 'logout' %}">Logout</a></li>
+                    <li class="nav-link"><a href="{% url 'user_index' user.id %}"><i class="ri-user-line lg-txt"></i></a></li>
                 {% else %}
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                    <li><a href="{% url 'signup' %}">Signup</a></li>
+                    <li class="btn"><a href="{% url 'login' %}">Login</a></li>
+                    <li class="btn outlined"><a href="{% url 'signup' %}">Signup</a></li>
                 {% endif %}
-                <li><a href=""></a></li>
             </ul>
+            <button class="btn nav-btn outlined"></button>
         </nav>
     </header>
+    <div class="lg-spacer"></div>
     <main>
         {% block content %}
         {% endblock %}
     </main>
+    <div class="md-spacer"></div>
     <footer>Footer here</footer>
 </body>
 </html>

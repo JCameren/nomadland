@@ -1,38 +1,76 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div>
+<div class="container">
+  <div class="flex-jc-sb">
+    <section>
+      <h1 class="lg-txt txt-focus">{{ destination.place }}</h1>
+      <p class="txt-subtle sm-txt">Posted by {{ destination.user.username }}</p>
+    </section>
+    {% if destination.user.id == request.user.id %}
+      <section>
+        <a href="{% url 'destinations_update' destination.id %}" class="btn outlined"><i class="ri-edit-line"></i></a>
+        <a href="{% url 'destinations_delete' destination.id %}" class="btn outlined"><i class="ri-delete-bin-7-line"></i></a> 
+      </section>
+    {% endif %}
+  </div>
+  <div class="xs-spacer txt-header-border"></div>
+</div>
+<div class="sm-spacer"></div>
   {% if photo %}
+  <div class="container">
     <img src="{{ photo.url }}" alt="Destination Photo">
+  </div>
   {% elif destination.user.id == request.user.id %}
-    <form action="{% url 'add_photo' destination.id %}" enctype="multipart/form-data" method="POST">
+    <form action="{% url 'add_photo' destination.id %}" enctype="multipart/form-data" method="POST"
+    class="container form flex-col card" id="photo-form">
       {% csrf_token %}
-      <input type="file" name="photo-file">
-      <button type="submit">Submit</button>
+      <h2 class="md-txt txt-subtle">Add Photo</h2>
+      <div class="sm-spacer"></div>
+      <div class="fields-container">
+        <input type="file" name="photo-file" class="card xs-spacer">
+      </div>
+      <div class="xs-spacer"></div>
+      <button type="submit" class="confirm btn">Submit</button>
     </form>
   {% endif %}
-  <h1>{{ destination.place }}</h1>
-  <p>{{ destination.description }}</p>
-  {% if destination.user.id == request.user.id %}
-    <a href="{% url 'destinations_update' destination.id %}">Edit</a>
-    <a href="{% url 'destinations_delete' destination.id %}">Delete</a> 
-  {% endif %}
+  <div class="sm-spacer"></div>
+  <div class="md-container">
+    <p>{{ destination.description }}</p>
+  </div>
+  <div class="md-spacer"></div>
+<!-- comment section -->
+<div class="container txt-header-border">
+  <h2 class="md-txt txt-subtle">{{ comments.count }} Comments</h2>
+  <div class="xs-spacer"></div>
 </div>
-<form action="{% url 'add_comment' destination.id %}" method="POST">
-  {% csrf_token %}
-  {{ comment_form.as_p }}
-  <button type="submit">Add comment</button>
-</form>
-{% for comment in comments %}
-<div style="border: 1px solid black;">
-  {{ comment.text }}
-  {{ comment.user.username }}
-  {% if comment.user.id == request.user.id %}
-    <a href="{% url 'comments_update' comment.id %}">Edit</a>
-    <a href="{% url 'comments_delete' comment.id %}">Delete</a>
-  {% endif %}
-</div>
-
-
-{% endfor %}
+{% if user.is_authenticated %}
+  <form action="{% url 'add_comment' destination.id %}" method="POST" class="container">
+    {% csrf_token %}
+    <div class="sm-spacer"></div>
+    <section class="flex-al-c fields-container">
+      <i class="ri-user-line md-txt txt-subtle"></i>
+      <input type="text" name="text" class="card xs-spacer" required>
+    </section>
+    <div class="xs-spacer"></div>
+    <section class="fields-container flex-end">
+      <button type="submit" class="confirm btn">Add comment</button>
+    </section>
+    <!-- {{ comment_form.as_p }} -->
+  </form>
+{% endif %}
+<div class="sm-spacer"></div>
+<section class="container">
+  {% for comment in comments %}
+    <div class="flex card xs-spacer">
+      <div class="flex-col">
+        <i class="ri-user-line md-txt txt-subtle"></i>
+        <p class="xs-txt txt-subtle">{{ comment.user.username }}</p>
+      </div>
+      <div class="flex-al-c">
+        <p class="sm-txt txt-focus" style="margin-left: 1rem;">{{ comment.text }}</p>
+      </div>
+    </div>
+  {% endfor %}
+</section>
 {% endblock %}

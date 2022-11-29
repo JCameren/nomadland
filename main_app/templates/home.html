@@ -1,12 +1,29 @@
 {%  extends 'base.html' %}
 {% block content %}
-<h1>Mission Statement</h1>
-<p>Lorem ipsum dolor sit amet,
-  consectetur adipiscing elit,
-   sed do eiusmod tempor incididunt
+<div class="container">
+  <h1 class="lg-txt txt-focus txt-header">Mission Statement</h1>
+  <div class="xs-spacer"></div>
+  <p class="txt-subtle sm-txt">
+    Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt
     ut labore et dolore magna aliqua.
-</p>
-{% for destination in destinations %}
-  <a href="{% url 'detail' destination.id %}"><div>{{ destination.place }}</div></a>
-{% endfor %}
+  </p>
+</div>
+<div class="md-spacer"></div>
+<div class="grid container">
+  {% for destination in destinations %}
+    <a href="{% url 'detail' destination.id %}">
+      <div class="card item flex-col sm-spacer">
+        <i class="ri-leaf-line md-txt txt-subtle"></i>
+        <div class="lg-spacer"></div>
+        <div class="main-content">
+          <h1 class="lg-txt txt-subtle">{{ destination.place }}</h1>
+          <div class="xs-spacer"></div>
+          <p class="txt-subtle sm-txt">Posted by {{ destination.user.username }}</p>
+        </div>
+      </div>
+    </a>
+  {% endfor %}
+</div>
 {% endblock %}

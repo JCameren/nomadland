@@ -2,20 +2,29 @@
 
 {% block content %}
 
-{% if object %}
-  <h1>Edit {{ object.place }}</h1>
-{% else %}
-  <h1>Add Destination</h1>
-{% endif %}
-
-<form action="" method="POST">
-
+<form action="" class="sm-container form card flex-col" method="POST">
   {% csrf_token %}
-  <table>
-    {{ form.as_table }}
-  </table>
-  
-  <input type="submit" value="submit" class="btn">
+  {% if object %}
+    <h2 class="md-txt txt-focus">Edit {{ object.place }}</h2>
+  {% else %}
+    <h2 class="md-txt txt-focus">Add New Destination</h2>
+  {% endif %}
+  <div class="md-spacer"></div>
+  <section class="fields-container txt-subtle flex-col">
+    <label for="">Place</label>
+    <div class="xs-spacer"></div>
+    <input type="text" name="place" class="card xs-spacer" required>
+  </section>
+  <div class="sm-spacer"></div>
+  <section class="fields-container txt-subtle flex-col">
+    <label for="">Description</label>
+    <div class="xs-spacer"></div>
+    <textarea name="description" class="card xs-spacer" required></textarea>
+  </section>
+  <div class="xs-spacer"></div>
+  <section class="fields-container txt-subtle flex-col">
+    <button class="confirm btn" type="submit">Confirm</button>
+  </section>
 </form>
 
 {% endblock %}
