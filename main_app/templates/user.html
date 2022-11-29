@@ -4,7 +4,7 @@
 
 {% if user.destination_set.count %}
   {% for destination in user.destination_set.all %}
-    <h1>{{ destination.place }}</h1>
+    <a href="{% url 'detail' destination.id %}"><h1>{{ destination.place }}</h1></a>
   {% endfor %}
 {% else %}
   <h1>No post</h1>
