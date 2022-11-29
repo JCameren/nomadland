@@ -13,8 +13,10 @@
   {% endif %}
   <h1>{{ destination.place }}</h1>
   <p>{{ destination.description }}</p>
-  <a href="{% url 'destinations_update' destination.id %}">Edit</a>
-  <a href="{% url 'destinations_delete' destination.id %}">Delete</a> 
+  {% if destination.user.id == request.user.id %}
+    <a href="{% url 'destinations_update' destination.id %}">Edit</a>
+    <a href="{% url 'destinations_delete' destination.id %}">Delete</a> 
+  {% endif %}
 </div>
 <form action="{% url 'add_comment' destination.id %}" method="POST">
   {% csrf_token %}
@@ -22,12 +24,15 @@
   <button type="submit">Add comment</button>
 </form>
 {% for comment in comments %}
-  <div style="border: 1px solid black;">
-    {{ comment.text }}
-    {{ comment.user.username }}
+<div style="border: 1px solid black;">
+  {{ comment.text }}
+  {{ comment.user.username }}
+  {% if comment.user.id == request.user.id %}
     <a href="{% url 'comments_update' comment.id %}">Edit</a>
     <a href="{% url 'comments_delete' comment.id %}">Delete</a>
-  </div>
+  {% endif %}
+</div>
+
 
 {% endfor %}
 {% endblock %}

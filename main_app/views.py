@@ -4,8 +4,10 @@ import boto3
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
-from django.urls import reverse,reverse_lazy
+from django.urls import reverse, reverse_lazy
 from .models import Destination, Comment, User, Photo
 from .forms import CommentForm
 
@@ -30,11 +32,11 @@ def destination_details(request, destination_id):
     'photo': photo
     })
 
-class DestinationUpdate(UpdateView):
+class DestinationUpdate(LoginRequiredMixin, UpdateView):
   model = Destination
   fields = ['description']
 
-class DestinationDelete(DeleteView):
+class DestinationDelete(LoginRequiredMixin, DeleteView):
   model = Destination
   success_url = '/'
 
@@ -55,7 +57,7 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
-class DestinationCreate(CreateView):
+class DestinationCreate(LoginRequiredMixin, CreateView):
   model = Destination
   fields = ['place', 'description']
 
@@ -73,6 +75,7 @@ class DestinationCreate(CreateView):
 #     form.instance.destination = destination_id
 #     return super().form_valid(form)
 
+@login_required
 def add_comment(request, destination_id):
   form = CommentForm(request.POST)
   if form.is_valid():
@@ -82,22 +85,24 @@ def add_comment(request, destination_id):
     new_comment.save()
   return redirect('detail', destination_id=destination_id)
 
-class CommentUpdate(UpdateView):
+class CommentUpdate(LoginRequiredMixin, UpdateView):
   model = Comment
   fields = ['text']
 
-class CommentDelete(DeleteView):
+class CommentDelete(LoginRequiredMixin, DeleteView):
   model = Comment
   #success_url = 'destination/<int:destination_id>'
   def get_success_url(self):
     #destination_id = self.destination.id
     return f"/destinations/{self.object.destination.id}"
 
+@login_required
 def user_index(request, user_id):
   user_id = request.user.id
   user = User.objects.get(id=user_id)
   return render(request, 'user.html', {'user': user})
 
+@login_required
 def add_photo(request, destination_id):
   photo_file = request.FILES.get('photo-file', None)
   if photo_file:
