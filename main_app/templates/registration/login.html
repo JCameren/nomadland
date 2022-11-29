@@ -1,10 +1,24 @@
 {%  extends 'base.html' %}
 {% block content %}
-<h1>Login</h1>
-<form action="{% url 'login' %}"  method="POST">
+
+<form action="" class="form sm-container card flex-col" method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="hidden" name="next" value="{{ next }}">
-    <button type="submit">Log In</button>
+    <h2 class="md-txt txt-focus">Login To Your Account</h2>
+    <div class="md-spacer"></div>
+    <section class="fields-container txt-subtle flex-col">
+        <label for="">Username</label>
+        <div class="xs-spacer"></div>
+        <input type="text" name="username" class="card xs-spacer">
+    </section>
+    <div class="sm-spacer"></div>
+    <section class="fields-container txt-subtle flex-col">
+        <label for="">Password</label>
+        <div class="xs-spacer"></div>
+        <input type="text" name="password" class="card xs-spacer">
+    </section>
+    <div class="sm-spacer"></div>
+    <section class="fields-container txt-subtle flex-col">
+        <button class="btn">Login</button>
+    </section>
 </form>
 {% endblock %}

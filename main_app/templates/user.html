@@ -1,13 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<div class="card xs-container flex-col flex-al-c form">
+  <i class="ri-user-line txt-focus lg-txt"></i>
+  <div class="xs-spacer"></div>
+  <h3 class="txt-focus md-txt">{{ user.username }}'s Profile</h3>
+  <div class="sm-spacer"></div>
+  <p class="txt-subtle sm-txt">{{ user.destination_set.count }} Posts</p>
+</div>
+<div class="md-spacer"></div>
 {% if user.destination_set.count %}
+<div class=" grid container">
   {% for destination in user.destination_set.all %}
-    <a href="{% url 'detail' destination.id %}"><h1>{{ destination.place }}</h1></a>
+    <!-- <a href="{% url 'detail' destination.id %}"><h1>{{ destination.place }}</h1></a> -->
+    <a href="{% url 'detail' destination.id %}">
+      <div class="card item flex-col sm-spacer">
+        <i class="ri-leaf-line md-txt txt-subtle"></i>
+        <div class="lg-spacer"></div>
+        <div class="main-content">
+          <h1 class="lg-txt txt-subtle">{{ destination.place }}</h1>
+          <div class="xs-spacer"></div>
+          <p class="txt-subtle">Posted by {{ destination.user.username }}</p>
+        </div>
+      </div>
+    </a>
   {% endfor %}
+</div>
 {% else %}
-  <h1>No post</h1>
+  <div class="sm-container flex-col flex-al-c">
+    <h2 class="lg-txt txt-subtle">No Posts.</h2>
+  </div>
 {% endif %}
 
 
