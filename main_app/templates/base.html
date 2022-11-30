@@ -1,63 +1,129 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.png' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.png' %}"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
     <title>NomandLand</title>
-</head>
-<body class="dark-mode">
+  </head>
+  <body class="dark-mode">
+    <section class="modal hidden sm-container">
+      <div class="flex-jc-sb">
+        <h2 class="md-txt txt-subtle">Navigation</h2>
+        <button class="btn outlined" id="btn-close">
+          <i class="ri-close-line"></i>
+        </button>
+      </div>
+      <div class="sm-spacer"></div>
+      <ul class="flex-col">
+        {% if user.is_authenticated %}
+        <li class="nav-link">
+          <a href="{% url 'destinations_create' %}">Add Destination</a>
+        </li>
+        <div class="xs-spacer"></div>
+        <li class="nav-link"><a href="{% url 'logout' %}">Logout</a></li>
+        <div class="xs-spacer"></div>
+        <li class="nav-link">
+          <a href="{% url 'user_index' user.id %}">Profile</a>
+        </li>
+        {% else %}
+        <li class="nav-ink"><a href="{% url 'login' %}">Login</a></li>
+        <div class="xs-spacer"></div>
+        <li class="nav-link"><a href="{% url 'signup' %}">Signup</a></li>
+        {% endif %}
+      </ul>
+    </section>
+    <div class="overlay hidden"></div>
     <header class="app-header flex-al-c">
-        <nav class="container flex-jc-sb">
-            <ul>
-                <li class="logo"><a href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" alt="website logo" id="logo"></a></li>
-            </ul>
-            <ul class="nav-links">
-                {% if user.is_authenticated %}
-                    <li class="nav-link"><a href="{% url 'destinations_create' %}">Add Destination</a></li>
-                    <li class="nav-link active-tab"><a href="{% url 'logout' %}">Logout</a></li>
-                    <li class="nav-link"><a href="{% url 'user_index' user.id %}"><i class="ri-user-line lg-txt"></i></a></li>
-                {% else %}
-                    <li class="btn"><a href="{% url 'login' %}">Login</a></li>
-                    <li class="btn outlined"><a href="{% url 'signup' %}">Signup</a></li>
-                {% endif %}
-            </ul>
-            <button class="btn nav-btn outlined"></button>
-        </nav>
+      <nav class="container flex-jc-sb">
+        <ul>
+          <li class="logo">
+            <a href="{% url 'home' %}"
+              ><img
+                src="{% static 'images/logo.png' %}"
+                alt="website logo"
+                id="logo"
+            /></a>
+          </li>
+        </ul>
+        <ul class="nav-links">
+          {% if user.is_authenticated %}
+          <li class="nav-link">
+            <a href="{% url 'destinations_create' %}">Add Destination</a>
+          </li>
+          <li class="nav-link"><a href="{% url 'logout' %}">Logout</a></li>
+          <li class="nav-link">
+            <a href="{% url 'user_index' user.id %}"
+              ><i class="ri-user-line lg-txt"></i
+            ></a>
+          </li>
+          {% else %}
+          <li class="btn"><a href="{% url 'login' %}">Login</a></li>
+          <li class="btn outlined"><a href="{% url 'signup' %}">Signup</a></li>
+          {% endif %}
+        </ul>
+        <button class="btn nav-btn outlined" id="btn-open"></button>
+      </nav>
     </header>
     <div class="lg-spacer"></div>
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+    <main>{% block content %} {% endblock %}</main>
     <div class="md-spacer"></div>
     <footer>
-        <div class="md-spacer"></div>
-        <div class="container flex-jc-sb">
-            <h3 class="txt-subtle xs-txt">All Rights Reserved, &copy; 2022 NomadLand &nbsp;</h3>
-        </div>
-        <div class="md-spacer"></div>
+      <div class="md-spacer"></div>
+      <div class="container flex-jc-sb">
+        <h3 class="txt-subtle xs-txt">
+          All Rights Reserved, &copy; 2022 NomadLand &nbsp;
+        </h3>
+      </div>
+      <div class="md-spacer"></div>
     </footer>
     <script>
-        const themeBtn = document.getElementById('theme-btn')
-        const logo = document.getElementById('logo')
-        const body = document.body
-        themeBtn.addEventListener('click', toggleTheme)
-        function toggleTheme() {
-            if (body.classList.contains('dark-mode')) {
-                body.classList.toggle('light-mode')
-                logo.src =`{% static 'images/logo-2.png' %}`
-                console.log(logo.src)
-            } else if (body.classList.contains('light-mode')) {
-                body.classList.toggle('dark-mode')
-                logo.src = `{% static 'images/logo.png' %}`
-                console.log(logo.src)
-            }
-        }
+      // const themeBtn = document.getElementById('theme-btn')
+      // const logo = document.getElementById('logo')
+      // const body = document.body
+      // themeBtn.addEventListener('click', toggleTheme)
+      // function toggleTheme() {
+      //     if (body.classList.contains('dark-mode')) {
+      //         body.classList.toggle('light-mode')
+      //         logo.src =`{% static 'images/logo-2.png' %}`
+      //         console.log(logo.src)
+      //     } else if (body.classList.contains('light-mode')) {
+      //         body.classList.toggle('dark-mode')
+      //         logo.src = `{% static 'images/logo.png' %}`
+      //         console.log(logo.src)
+      //     }
+      // }
+      const modal = document.querySelector(".modal");
+      const overlay = document.querySelector(".overlay");
+      const openModalBtn = document.getElementById("btn-open");
+      const closeModalBtn = document.getElementById("btn-close");
+
+      const openModal = function () {
+        modal.classList.remove("hidden");
+        overlay.classList.remove("hidden");
+      };
+
+      openModalBtn.addEventListener("click", openModal);
+
+      const closeModal = function () {
+        modal.classList.add("hidden");
+        overlay.classList.add("hidden");
+      };
+
+      closeModalBtn.addEventListener("click", closeModal);
+
+      overlay.addEventListener("click", closeModal);
     </script>
-</body>
+  </body>
 </html>
