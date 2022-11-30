@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Edit Comment</h1>
-<form action="" method="POST">
+<form action="" method="POST" class="sm-container card form flex-col">
+  <h2 class="md-txt txt-focus">Edit Comment</h2>
+  <div class="md-spacer"></div>
   {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" >Submit</button>
+  <!-- {{ form.as_p }} -->
+  <section class="fields-container">
+    <textarea name="text" class="card xs-spacer">{{ object.text }}</textarea>
+  </section>
+  <div class="xs-spacer"></div>
+  <section class="fields-container txt-subtle flex-col">
+    <button class="confirm btn" type="submit">Edit Comment</button>
+  </section>
 </form>
 
 {% endblock %}

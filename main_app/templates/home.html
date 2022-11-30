@@ -4,17 +4,17 @@
   <h1 class="lg-txt txt-focus txt-header">Mission Statement</h1>
   <div class="xs-spacer"></div>
   <p class="txt-subtle sm-txt">
-    Lorem ipsum dolor sit amet,
-    consectetur adipiscing elit,
-    sed do eiusmod tempor incididunt
-    ut labore et dolore magna aliqua.
+    A trusted platform for  Nomads and travelers
+    to share their experiences around
+    the world and learn about new travel destinations
+    from other travelers.
   </p>
 </div>
 <div class="md-spacer"></div>
 <div class="grid container">
   {% for destination in destinations %}
     <a href="{% url 'detail' destination.id %}">
-      <div class="card item flex-col sm-spacer">
+      <div class="card main item flex-col sm-spacer">
         <i class="ri-leaf-line md-txt txt-subtle"></i>
         <div class="lg-spacer"></div>
         <div class="main-content">

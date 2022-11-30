@@ -13,13 +13,13 @@
   <section class="fields-container txt-subtle flex-col">
     <label for="">Place</label>
     <div class="xs-spacer"></div>
-    <input type="text" name="place" class="card xs-spacer" required>
+    <input type="text" name="place" class="card xs-spacer" value="{{ object.place }}" required>
   </section>
   <div class="sm-spacer"></div>
   <section class="fields-container txt-subtle flex-col">
     <label for="">Description</label>
     <div class="xs-spacer"></div>
-    <textarea name="description" class="card xs-spacer" required></textarea>
+    <textarea name="description" class="card xs-spacer" required>{{ object.description }}</textarea>
   </section>
   <div class="xs-spacer"></div>
   <section class="fields-container txt-subtle flex-col">
