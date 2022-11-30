@@ -36,21 +36,26 @@
     </main>
     <div class="md-spacer"></div>
     <footer>
-        <button class="btn outlined" id="theme-btn">Theme</button>
+        <div class="md-spacer"></div>
+        <div class="container flex-jc-sb">
+            <h3 class="txt-subtle xs-txt">All Rights Reserved, &copy; 2022 NomadLand &nbsp;</h3>
+        </div>
+        <div class="md-spacer"></div>
     </footer>
     <script>
         const themeBtn = document.getElementById('theme-btn')
         const logo = document.getElementById('logo')
         const body = document.body
-        console.log(logo.src)
         themeBtn.addEventListener('click', toggleTheme)
         function toggleTheme() {
             if (body.classList.contains('dark-mode')) {
                 body.classList.toggle('light-mode')
                 logo.src =`{% static 'images/logo-2.png' %}`
-            } else {
+                console.log(logo.src)
+            } else if (body.classList.contains('light-mode')) {
                 body.classList.toggle('dark-mode')
                 logo.src = `{% static 'images/logo.png' %}`
+                console.log(logo.src)
             }
         }
     </script>

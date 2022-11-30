@@ -464,13 +464,19 @@ h1, h2, h3 {
     }
 }
 
+@media (max-width: 600px) {
+    .nav-links {
+        display: none;
+    }
+
+    .nav-btn {
+        display: block;
+    }
+}
+
 @media (max-width: 480px) {
     .container, .md-container, .sm-container {
         width: 90%;
-    }
-
-    .nav-links {
-        display: none;
     }
 
     .main:first-child {
@@ -496,9 +502,5 @@ h1, h2, h3 {
 
     .md-spacer {
         padding: 1rem;
-    }
-
-    .nav-btn {
-        display: block;
     }
 }
