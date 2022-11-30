@@ -1,17 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-  <h1>Delete Destination</h1>
-
-  <h4>Are you sure you want to delete {{ object.name }}</h4>
-
-  <form action="" method="POST">
+  <form action="" method="POST" class="card form sm-container flex-col">
     {% csrf_token %}
-
-    <button type="submit">Delete</button>
-    <a href="{% url 'detail' object.id %}">Cancel</a>
-
+    <h2 class="md-txt txt-focus">Delete {{ object.place }}?</h2>
+    <div class="md-spacer"></div>
+    <section class="flex">
+      <button type="submit" class="delete btn"><i class="ri-delete-bin-7-line"></i>Delete</button>
+      <a href="{% url 'detail' object.id %}" class="btn outlined">Cancel</a>
+    </section>
   </form>
-
 {% endblock %}

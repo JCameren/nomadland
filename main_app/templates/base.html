@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.png' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <title>NomandLand</title>
@@ -13,7 +14,7 @@
     <header class="app-header flex-al-c">
         <nav class="container flex-jc-sb">
             <ul>
-                <li><a href="{% url 'home' %}">Logo</a></li>
+                <li class="logo"><a href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" alt="website logo" id="logo"></a></li>
             </ul>
             <ul class="nav-links">
                 {% if user.is_authenticated %}
@@ -34,6 +35,24 @@
         {% endblock %}
     </main>
     <div class="md-spacer"></div>
-    <footer>Footer here</footer>
+    <footer>
+        <button class="btn outlined" id="theme-btn">Theme</button>
+    </footer>
+    <script>
+        const themeBtn = document.getElementById('theme-btn')
+        const logo = document.getElementById('logo')
+        const body = document.body
+        console.log(logo.src)
+        themeBtn.addEventListener('click', toggleTheme)
+        function toggleTheme() {
+            if (body.classList.contains('dark-mode')) {
+                body.classList.toggle('light-mode')
+                logo.src =`{% static 'images/logo-2.png' %}`
+            } else {
+                body.classList.toggle('dark-mode')
+                logo.src = `{% static 'images/logo.png' %}`
+            }
+        }
+    </script>
 </body>
 </html>

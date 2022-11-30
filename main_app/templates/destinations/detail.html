@@ -71,6 +71,14 @@
         <p class="sm-txt txt-focus" style="margin-left: 1rem;">{{ comment.text }}</p>
       </div>
     </div>
+    <div class="xs-spacer"></div>
+    {% if comment.user.id == request.user.id%}
+    <section class="flex">
+      <a href="{% url 'comments_update' comment.id %}" class="btn outlined"><i class="ri-edit-line"></i></a>
+      <a href="{% url 'comments_delete' comment.id %}" class="btn outlined"><i class="ri-delete-bin-7-line"></i></a>
+    </section>
+    <div class="xs-spacer"></div>
+    {% endif %}
   {% endfor %}
 </section>
 {% endblock %}
